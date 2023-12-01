@@ -1,4 +1,6 @@
 
+import { Outlet, Link } from 'react-router-dom'
+
 export const Home = () => {
   return (
     <>
@@ -30,15 +32,21 @@ export const Home = () => {
         <nav>
           <ul>
             <li>
-              <a href={`/contacts/1`}>Your Name</a>
+              {/* <a href={`/contacts/1`}>Your Name</a> */}
+              {/* Los a refs hace un full reflesh y para prevenirlos utilizamos Link de rect */}
+              <Link to={`contacts/1`} >Contactor 1</Link>
             </li>
             <li>
-              <a href={`/contacts/2`}>Your Friend</a>
+              {/* <a href={`/contacts/2`}>Your Friend</a> */}
+              <Link to={`contacts/2`} >Contactor 2</Link>
             </li>
           </ul>
         </nav>
       </div>
-      <div id="detail"></div>
+      <div id="detail">
+        {/* Para que los hijos de las rutas se rendericen aquí */}
+        <Outlet/> 
+      </div>
     </>
   )
 }
