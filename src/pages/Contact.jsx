@@ -1,15 +1,9 @@
-import { Form } from 'react-router-dom'
+import { Form, useLoaderData } from 'react-router-dom'
+
 export const Contact = () => {
 
-    const contact = {
-        first: 'Omar',
-        last: 'Martínez',
-        avatar: 'https://placekitten.com/g/200/200',
-        twitter: 'No tengo',
-        notes: 'Algunas notas, personales',
-        favorite: true
-    }
-
+    const { contact } = useLoaderData();
+    
     return (
         <div id="contact">
             <div>

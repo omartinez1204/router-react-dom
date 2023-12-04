@@ -1,10 +1,10 @@
 
-import { Outlet, Link, useLoaderData } from 'react-router-dom'
+import { Outlet, NavLink, useLoaderData, Form } from 'react-router-dom'
 
 export const Home = () => {
 
   /*    obtener los contactos del loader, router       */
-  const {contacts} = useLoaderData()
+  const { contacts } = useLoaderData()
 
   return (
     <>
@@ -29,9 +29,9 @@ export const Home = () => {
               aria-live="polite"
             ></div>
           </form>
-          <form method="post">
-            <button type="submit">New</button>
-          </form>
+          <Form method='post'>
+            <button type='submit'> Nuevo </button>
+          </Form>
         </div>
         <nav>
           {
@@ -39,16 +39,25 @@ export const Home = () => {
               ? (<ul>
                 {contacts.map((contact) => (
                   <li key={contact.id}>
-                    <Link to={`contacts/${contact.id}`} />
-                    {
-                      contact.first || contact.last
-                        ? (<>
-                          {contact.first} {contact.last}
-                        </>)
-                        : (<i> No name </i>)} {" "}
+                    <NavLink
+                      to={`contacts/${contact.id}`}
+                      className={({ isActive, isPending }) =>
+                        isActive
+                          ? "active"
+                          : isPending
+                            ? "pending"
+                            : ""
+                      }
+                    >
+                      {
+                        contact.first || contact.last
+                          ? `${contact.first} ${contact.last}`
+                          : 'No name'
+                      }
+                    </NavLink>
                   </li>
                 ))}
-                </ul>)
+              </ul>)
               : (<p> <i> No Contacts</i> </p>)
           }
         </nav>
