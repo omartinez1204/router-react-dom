@@ -1,7 +1,11 @@
 
-import { Outlet, Link } from 'react-router-dom'
+import { Outlet, Link, useLoaderData } from 'react-router-dom'
 
 export const Home = () => {
+
+  /*    obtener los contactos del loader, router       */
+  const {contacts} = useLoaderData()
+
   return (
     <>
       <div id="sidebar">
@@ -30,22 +34,28 @@ export const Home = () => {
           </form>
         </div>
         <nav>
-          <ul>
-            <li>
-              {/* <a href={`/contacts/1`}>Your Name</a> */}
-              {/* Los a refs hace un full reflesh y para prevenirlos utilizamos Link de rect */}
-              <Link to={`contacts/1`} >Contactor 1</Link>
-            </li>
-            <li>
-              {/* <a href={`/contacts/2`}>Your Friend</a> */}
-              <Link to={`contacts/2`} >Contactor 2</Link>
-            </li>
-          </ul>
+          {
+            contacts.length
+              ? (<ul>
+                {contacts.map((contact) => (
+                  <li key={contact.id}>
+                    <Link to={`contacts/${contact.id}`} />
+                    {
+                      contact.first || contact.last
+                        ? (<>
+                          {contact.first} {contact.last}
+                        </>)
+                        : (<i> No name </i>)} {" "}
+                  </li>
+                ))}
+              </ul>)
+              : (<p> <i> No Contacts</i> </p>)
+          }
         </nav>
       </div>
       <div id="detail">
         {/* Para que los hijos de las rutas se rendericen aquí */}
-        <Outlet/> 
+        <Outlet />
       </div>
     </>
   )
