@@ -48,7 +48,7 @@ export const Home = () => {
                         : (<i> No name </i>)} {" "}
                   </li>
                 ))}
-              </ul>)
+                </ul>)
               : (<p> <i> No Contacts</i> </p>)
           }
         </nav>
