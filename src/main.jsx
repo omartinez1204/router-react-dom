@@ -3,7 +3,13 @@ import ReactDOM from 'react-dom/client'
 import './css/style.css'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import { Home, Error, Contact, Edit } from './pages'
-import { loader as loadingData, create as createContact, searchById, update } from './helpers/crud_contacts'
+import { 
+    loader as loadingData, 
+    create as createContact, 
+    searchById, 
+    update,
+    deleteOneContact
+    } from './helpers/crud_contacts'
 
 
 const router = createBrowserRouter([
@@ -24,6 +30,10 @@ const router = createBrowserRouter([
                 element: <Edit/>,
                 loader: searchById,
                 action: update
+            },
+            {
+                path: 'contacts/:contactId/destroy',
+                action: deleteOneContact
             }
         ]
     },

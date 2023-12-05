@@ -1,6 +1,6 @@
 /*    Cargar Datos              */
 import { redirect } from 'react-router-dom';
-import { getContacts, createContact, getContact, updateContact } from '../db/useGetDataFetch'
+import { getContacts, createContact, getContact, updateContact, deleteContact } from '../db/useGetDataFetch'
 
 const loader = async()=> {
   const contacts = await getContacts()
@@ -32,13 +32,20 @@ const update = async({request, params}) =>{
   await updateContact(params.contactId, updates)
   return redirect(`/contacts/${params.contactId}`)
 }
-/*    Fin actualizar      */
+/*    Fin actualizar                */
 
+/*    Eliminar Contacto            */
+const deleteOneContact = async({params}) =>{
+  await deleteContact(params.contactId)
+  return redirect('/')
+}
+/*    Fin Eliminar                 */
 
 
 export {
   loader,
   create,
   searchById,
-  update
+  update,
+  deleteOneContact
 }
