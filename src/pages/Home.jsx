@@ -1,10 +1,12 @@
 
-import { Outlet, NavLink, useLoaderData, Form } from 'react-router-dom'
+import { Outlet, NavLink, useLoaderData, Form, useNavigation } from 'react-router-dom'
 
 export const Home = () => {
 
   /*    obtener los contactos del loader, router       */
   const { contacts } = useLoaderData()
+  /* Para que se pueda hacer scroll al sidebar contacts */
+  const navitation = useNavigation()
 
   return (
     <>
@@ -62,9 +64,13 @@ export const Home = () => {
           }
         </nav>
       </div>
-      <div id="detail">
+      <div 
+        id="detail"
+        className={ navitation.state === "loading" ? 'loading': '' }
+      >
         {/* Para que los hijos de las rutas se rendericen aquí */}
         <Outlet />
+
       </div>
     </>
   )
