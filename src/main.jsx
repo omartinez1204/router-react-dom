@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './css/style.css'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-import { Home, Error, Contact, Edit } from './pages'
+import { Home, Error, Contact, Edit, Welcome } from './pages'
 import { 
     loader as loadingData, 
     create as createContact, 
@@ -21,6 +21,10 @@ const router = createBrowserRouter([
         action: createContact, // accion principal, post, crear nuevo contacto
         children: [
             {
+                index: true,
+                element: <Welcome/> /* Para establecer la página por default de Bienvenida */
+            },
+            {
                 path: 'contacts/:contactId',
                 element: <Contact/>,
                 loader: searchById,
@@ -33,7 +37,8 @@ const router = createBrowserRouter([
             },
             {
                 path: 'contacts/:contactId/destroy',
-                action: deleteOneContact
+                action: deleteOneContact,
+                errorElement: <div>  Oops! a Ocurrido un error </div>
             }
         ]
     },
