@@ -1,11 +1,11 @@
 
-import { Form, useLoaderData } from 'react-router-dom'
+import { Form, useLoaderData, useNavigate } from 'react-router-dom'
 
 
 export const Edit = () => {
 
     const {contact} = useLoaderData();
-
+    const navigate = useNavigate() // Para cancelar una acción...
     return (
         <Form method='post' id='contact-form'>
             <p>
@@ -54,7 +54,14 @@ export const Edit = () => {
             </label>
             <p>
                 <button type='submit'>Guardar</button>
-                <button type='button'>Cancelar</button>
+                <button 
+                    type='button'
+                    onClick={()=>{
+                        navigate(-1); // Cancelando... navegando un item atras de la pila o stock
+                    }}
+                >
+                    Cancelar
+                </button>
             </p>
         </Form>
     )
