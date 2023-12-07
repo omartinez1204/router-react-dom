@@ -1,10 +1,16 @@
 /*    Cargar Datos              */
-import { redirect } from 'react-router-dom';
+import { redirect, useFetcher } from 'react-router-dom';
 import { getContacts, createContact, getContact, updateContact, deleteContact } from '../db/useGetDataFetch'
 
-const loader = async()=> {
-  const contacts = await getContacts()
-  return {contacts};
+
+/*   Método para buscar o filtrar por consulta del usuario  */
+/*   Input Search  */
+/*   También para cargar todos los usuario */
+const loader = async({ request })=> {
+  const url = new URL(request.url)
+  const q = url.searchParams.get("q") // obtener el párametro por el name del input: q
+  const contacts = await getContacts(q)
+  return {contacts, q};
 }
 /*    Fin Cargar datos          */
 
@@ -41,7 +47,14 @@ const deleteOneContact = async({params}) =>{
 }
 /*    Fin Eliminar                 */
 
+/*   Actualizar el contacto FAVORITO */
 
+const actionUpdateFavorite = async({ request, params })=>{
+  let formData = await request.formData()
+  return updateContact(params.contactId, {
+    favorite: formData.get("favorite") === "true"
+  });
+}
 
 
 export {
@@ -49,5 +62,6 @@ export {
   create,
   searchById,
   update,
-  deleteOneContact
+  deleteOneContact,
+  actionUpdateFavorite
 }

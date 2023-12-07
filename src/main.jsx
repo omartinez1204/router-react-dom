@@ -8,7 +8,8 @@ import {
     create as createContact, 
     searchById, 
     update,
-    deleteOneContact
+    deleteOneContact,
+    actionUpdateFavorite
     } from './helpers/crud_contacts'
 
 
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
                 path: 'contacts/:contactId',
                 element: <Contact/>,
                 loader: searchById,
+                action: actionUpdateFavorite
             },
             {
                 path: 'contacts/:contactId/edit',
