@@ -1,9 +1,4 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import './css/style.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Home, Error, Contact, Edit, Welcome } from './pages'
-
 import {
     loader as loadingData,
     create as createContact,
@@ -14,7 +9,7 @@ import {
 } from './helpers/crud_contacts'
 
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
     {
         path: '/',
         element: <Home />,
@@ -23,7 +18,7 @@ const router = createBrowserRouter([
         action: createContact, // accion principal, post, crear nuevo contacto
         children: [
             {
-                errorElement: <Error />, // página de error por default para todos... página sin ruta
+                errorElement: <Error />, // página de error por default para todos...
                 children: [
                     {
                         index: true,
@@ -54,7 +49,3 @@ const router = createBrowserRouter([
 
 ])
 
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-    <RouterProvider router={router} />
-)

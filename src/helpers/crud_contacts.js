@@ -6,17 +6,17 @@ import { getContacts, createContact, getContact, updateContact, deleteContact } 
 /*   Método para buscar o filtrar por consulta del usuario  */
 /*   Input Search  */
 /*   También para cargar todos los usuario */
-const loader = async({ request })=> {
+const loader = async ({ request }) => {
   const url = new URL(request.url)
   const q = url.searchParams.get("q") // obtener el párametro por el name del input: q
   const contacts = await getContacts(q)
-  return {contacts, q};
+  return { contacts, q };
 }
 /*    Fin Cargar datos          */
 
 
 /*    Crear Contacto            */
-const create = async() =>{
+const create = async () => {
   const contact = await createContact();
   return redirect(`/contacts/${contact.id}/edit`) // lo redireccionamos hacia la pagina de editar para crear un nuevo contacto
 }
@@ -24,15 +24,23 @@ const create = async() =>{
 
 
 /*  Buscar por id contacto      */
-const searchById = async({params})=>{
+const searchById = async ({ params }) => {
+
   const contact = await getContact(params.contactId)
-  return {contact}
+//Todo: Si el contacto no existe: por ejemplo https://localhost:1730/contacts/nulluser
+  if (!contact) {
+    throw new Response("", {
+      status: 404,
+      statusText: "El Contacto No Existe"
+    })
+  }
+  return { contact }
 }
 /*  Fin de Buscar Por ID        */
 
 
 /*    actualizar Contacto            */
-const update = async({request, params}) =>{
+const update = async ({ request, params }) => {
   const formData = await request.formData()
   const updates = Object.fromEntries(formData)
   await updateContact(params.contactId, updates)
@@ -41,7 +49,7 @@ const update = async({request, params}) =>{
 /*    Fin actualizar                */
 
 /*    Eliminar Contacto            */
-const deleteOneContact = async({params}) =>{
+const deleteOneContact = async ({ params }) => {
   await deleteContact(params.contactId)
   return redirect('/')
 }
@@ -49,7 +57,7 @@ const deleteOneContact = async({params}) =>{
 
 /*   Actualizar el contacto FAVORITO */
 
-const actionUpdateFavorite = async({ request, params })=>{
+const actionUpdateFavorite = async ({ request, params }) => {
   let formData = await request.formData()
   return updateContact(params.contactId, {
     favorite: formData.get("favorite") === "true"

@@ -54,6 +54,7 @@ function Favorite({ contact }) {
     let favorite = contact.favorite;
     
     
+    
     return (
         <fetcher.Form method="post"> 
             <button
